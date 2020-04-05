@@ -5,7 +5,8 @@ import LeftMenu from "./partials/menus/LeftMenu";
 import Content from "./partials/Content";
 import { Card , Container , Row ,  ListGroup , Table , Col } from "react-bootstrap";
 import withRedux from "next-redux-wrapper";
-import { products , initStore , initialCards , addItem , dispachActions} from "../store";
+import { initStore , initialCards , addItem } from "../redux/store";
+import {products , dispachActions} from '../redux/actions';
 import { ORDERS } from "../pages/partials/consts/actionsConstants";
 import  OrdersItem  from "./partials/OrdersItem";
 

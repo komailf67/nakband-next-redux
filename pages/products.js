@@ -9,7 +9,9 @@ import 'isomorphic-unfetch';
 import Link from "next/link";
 import {getProducts} from "../data/productsData";
 import withRedux from "next-redux-wrapper";
-import { products , initStore , initialCards , addItem , dispachActions} from "../store";
+import { initStore } from "../redux/store";
+import {products , dispachActions} from '../redux/actions';
+
 import { bindActionCreators } from 'redux';
 import  ProductsItem  from "./partials/ProductsItem";
 import { PRODUCTS } from "../pages/partials/consts/actionsConstants";

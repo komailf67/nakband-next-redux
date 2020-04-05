@@ -1,5 +1,5 @@
 import axios from "axios";
-import { products } from "../store";
+// import { products } from "../storeee";
 
 
 export const getProducts = () => {
