@@ -2,6 +2,7 @@ import React , { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LeftMenu from "./partials/menus/LeftMenu";
 import { Card , Container , Row , Col } from "react-bootstrap";
+import './styles.css';
 
 class Index extends Component {
 
@@ -11,7 +12,7 @@ class Index extends Component {
           <Container>
             <Row>
               <LeftMenu />
-              <Col sm={9}>
+              <Col sm={9} className="text-right">
               <Card >
                 <Card.Header>Content</Card.Header>
                 <Card.Body>

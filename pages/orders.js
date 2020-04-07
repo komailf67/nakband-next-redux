@@ -31,7 +31,7 @@ class Orders extends Component {
         <Container>
           <Row>
             <LeftMenu />
-            <Col sm={9}>
+            <Col sm={9} className="text-right">
               <Card >
                 <Card.Header>Content</Card.Header>
                 <Card.Body>

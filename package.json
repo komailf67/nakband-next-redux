@@ -34,5 +34,8 @@
     "typesafe-actions": "^5.1.0",
     "typescript": "^3.8.3"
   },
-  "proxy": "http://localhost:8000"
+  "proxy": "http://localhost:8000",
+  "devDependencies": {
+    "package": "^1.0.1"
+  }
 }
