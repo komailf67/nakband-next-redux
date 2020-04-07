@@ -27,10 +27,16 @@ class LeftMenu extends Component {
         return (
             <Col sm={3} className="text-right">
                 <Card>
-                    <Card.Header>Menu</Card.Header>
+                    <Card.Header>منو</Card.Header>
                     <ListGroup variant="flush">
                         <ListGroup.Item>
                             <Link href="/">Home</Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Link href="/storage/">انبار</Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Link href="/storage/add">افزودن محصول به انبار</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Link href="/products">Products</Link>
