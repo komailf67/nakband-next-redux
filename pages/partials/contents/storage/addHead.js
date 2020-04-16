@@ -5,6 +5,11 @@ import { initStore } from "../../../../redux/store";
 import { products, dispatchActions } from "../../../../redux/actions";
 import { CATEGORIES } from "../../consts/actionsConstants";
 import $ from "jquery";
+import DatePicker from 'react-datepicker2';
+import momentJalaali from 'moment-jalaali';
+// import 'react-datepicker2/src/style.min.css';
+
+
 
 
 class AddHead extends Component {
@@ -13,7 +18,8 @@ class AddHead extends Component {
         super(props);
 
         this.state = {
-            category: ''
+            category: '',
+            value: momentJalaali()
         }
     }
 
@@ -55,6 +61,7 @@ class AddHead extends Component {
         sellerDetails['sellerName'] = $('#seller').val();
         sellerDetails['invoiceNumber'] = $('#invoice-number').val();
         sellerDetails['phoneNumber'] = $('#phone-number').val();
+        sellerDetails['date'] = $('.datepicker-input').val();
 
         newProduct.push(sellerDetails);
 
@@ -64,7 +71,7 @@ class AddHead extends Component {
             item['description'] = $(this).find('input.description').val();
             item['count'] = $(this).find('input.count').val();
             item['buy-price'] = $(this).find('input.buy-price').val();
-            item['date'] = $(this).find('input.date').val();
+            // item['date'] = $(this).find('input.date').val();
             newProduct.push(item);
         });
         console.log(newProduct);
@@ -96,6 +103,15 @@ class AddHead extends Component {
                         <Form.Label>شماره تماس</Form.Label>
                         <Form.Control type="phone-number" placeholder="" />
                     </Form.Group>
+                    <Form.Group as={Col}>
+                        <Form.Label>تاریخ خرید</Form.Label>
+                        <DatePicker
+                        className="form-control"
+                            isGregorian={false}
+                            value={this.state.value}
+                            onChange={value => this.setState({ value })}
+                            />
+                    </Form.Group>
                 </Form.Row>
                 <Form.Row className="uncommon-inputs">
                     <Form.Group as={Col} controlId="formGridState">
@@ -123,10 +139,6 @@ class AddHead extends Component {
                     <Form.Group as={Col}>
                         <Form.Label>قیمت خرید</Form.Label>
                         <Form.Control className="buy-price"/>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>تاریخ خرید</Form.Label>
-                        <Form.Control className="date" />
                     </Form.Group>
                 </Form.Row>
                 <Button variant="primary" type="button" onClick={this.submitForm}>
