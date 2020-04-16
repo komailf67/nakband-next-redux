@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Col, Card } from 'react-bootstrap';
+import { Col, Card, Table } from 'react-bootstrap';
 
 class Content extends Component {
     render() {
+        let {title, children} = this.props;
         console.log(this.props);
         
         return (
-            <Col sm={9}>
+            <Col sm={9} className="text-right">
                 <Card >
-                    <Card.Header>Content</Card.Header>
+                    <Card.Header>{title}</Card.Header>
                     <Card.Body>
-                        
+                        {children}
                     </Card.Body >
                 </Card>
             </Col>

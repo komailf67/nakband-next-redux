@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import { ORDERS,PRODUCTS } from "../../pages/partials/consts/actionsConstants";
-// import {  } from "./reducers";
+import { ORDERS,PRODUCTS, CATEGORIES } from "../../pages/partials/consts/actionsConstants";
 
 
 
@@ -17,6 +16,11 @@ export const reducer = (state = initialState, action) => {
           ...state,
           orders: action.orders
         }
+      case CATEGORIES :
+      return {
+        ...state,
+        categories: action.categories
+      }
       default: return state
     }
   }

@@ -1,6 +1,6 @@
 import React , { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LeftMenu from "./partials/menus/LeftMenu";
+import RightMenu from "./partials/menus/RightMenu";
 import { Card , Container , Row , Col } from "react-bootstrap";
 import './styles.css';
 
@@ -11,7 +11,7 @@ class Index extends Component {
       <React.Fragment>
           <Container>
             <Row>
-              <LeftMenu />
+              <RightMenu />
               <Col sm={9} className="text-right">
               <Card >
                 <Card.Header>Content</Card.Header>

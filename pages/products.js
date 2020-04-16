@@ -1,7 +1,7 @@
 import React , { Component } from "react";
 import { Card , Container , Row ,  ListGroup , Table , Col } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LeftMenu from "./partials/menus/LeftMenu";
+import RightMenu from "./partials/menus/RightMenu";
 import Content from "./partials/Content";
 import { Route as Router } from "react-router-dom";
 import axios from "axios";
@@ -10,10 +10,10 @@ import Link from "next/link";
 import {getProducts} from "../data/productsData";
 import withRedux from "next-redux-wrapper";
 import { initStore } from "../redux/store";
-import {products , dispachActions} from '../redux/actions';
+import {products , dispatchActions} from '../redux/actions';
 
 import { bindActionCreators } from 'redux';
-import  ProductsItem  from "./partials/ProductsItem";
+import  ProductsItem  from "./partials/contents/ProductsItem";
 import { PRODUCTS } from "../pages/partials/consts/actionsConstants";
 class Products extends Component {
 
@@ -42,7 +42,7 @@ class Products extends Component {
       <React.Fragment>
         <Container>
           <Row>
-            <LeftMenu />
+            <RightMenu />
             <Col sm={9} className="text-right">
               <Card >
                 <Card.Header>Content</Card.Header>
@@ -74,7 +74,7 @@ class Products extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: (url , actionType) => dispatch(dispachActions(url , actionType)),
+    fetchData: (url , actionType) => dispatch(dispatchActions(url , actionType)),
 
       // initialCards: bindActionCreators(initialCards, dispatch),
       // addItem: bindActionCreators(addItem, dispatch),

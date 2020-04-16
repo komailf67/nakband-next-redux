@@ -6,7 +6,7 @@ import Content from "./partials/Content";
 import { Card , Container , Row ,  ListGroup , Table , Col } from "react-bootstrap";
 import withRedux from "next-redux-wrapper";
 import { initStore , initialCards , addItem } from "../redux/store";
-import {products , dispachActions} from '../redux/actions';
+import {products , dispatchActions} from '../redux/actions';
 import { ORDERS } from "../pages/partials/consts/actionsConstants";
 import  OrdersItem  from "./partials/OrdersItem";
 
@@ -62,7 +62,7 @@ class Orders extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return{
-    fetchData: (url , actionType) => dispatch(dispachActions(url , actionType)),
+    fetchData: (url , actionType) => dispatch(dispatchActions(url, actionType)),
   }
 }
 const mapStateToProps = (state) => { 

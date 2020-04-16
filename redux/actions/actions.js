@@ -1,4 +1,4 @@
-import { PRODUCTS, ORDERS } from '../../pages/partials/consts/actionsConstants.js';
+import { PRODUCTS, ORDERS, CATEGORIES } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
 
@@ -17,9 +17,18 @@ export const products = (products) => {
     }
   }
 
+  export const categories = (categories) => {  
+    return {
+      type: CATEGORIES,
+      categories
+    }
+  }
 
 
-  export function dispachActions(url, actionType) {
+
+  export function dispatchActions(url, actionType) {
+    // console.log(actionType);
+    
     return (dispatch) => {
       
       switch (actionType) {
@@ -30,13 +39,20 @@ export const products = (products) => {
               return response;
             })
           break;
-        case ORDERS:
+        case CATEGORIES:
           axios.get(url)
-            .then((response) => {
-              dispatch(orders(response.data))
+            .then((response) => {              
+              dispatch(categories(response.data))
               return response;
             })
           break;
+        case ORDERS:
+        axios.get(url)
+          .then((response) => {
+            dispatch(orders(response.data))
+            return response;
+          })
+        break;
         default:
           break;
       }

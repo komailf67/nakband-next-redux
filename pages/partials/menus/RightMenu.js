@@ -4,7 +4,7 @@ import { Card , ListGroup , Col} from "react-bootstrap";
 import Router from 'next/router'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-class LeftMenu extends Component {
+class RightMenu extends Component {
     
     render() {
         const onClickHandler = (href) => {
@@ -33,7 +33,7 @@ class LeftMenu extends Component {
                             <Link href="/">Home</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <Link href="/storage/">انبار</Link>
+                            <Link href="/storage/products">انبار</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Link href="/storage/add">افزودن محصول به انبار</Link>
@@ -50,4 +50,4 @@ class LeftMenu extends Component {
         )
     }
 }
-export default LeftMenu;
+export default RightMenu;
