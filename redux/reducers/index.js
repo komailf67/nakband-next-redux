@@ -1,26 +1,11 @@
 import { combineReducers } from "redux";
-import { ORDERS,PRODUCTS, CATEGORIES } from "../../pages/partials/consts/actionsConstants";
+import { productsReducer } from "./productsReducer";
+import { categoryReducer } from "./categoryReducer";
+import { ORDERS, PRODUCTS, CATEGORIES, ADD_PRODUCTS } from "../../pages/partials/consts/actionsConstants";
 
+const rootReduces = combineReducers({
+  categories: categoryReducer,
+  products: productsReducer
+});
 
-
-export const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      
-      case PRODUCTS:
-        return {
-          ...state,
-          products: action.products
-        }
-      case ORDERS :
-        return {
-          ...state,
-          orders: action.orders
-        }
-      case CATEGORIES :
-      return {
-        ...state,
-        categories: action.categories
-      }
-      default: return state
-    }
-  }
+export default rootReduces;

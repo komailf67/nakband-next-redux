@@ -1,21 +1,21 @@
-import { PRODUCTS, ORDERS, CATEGORIES } from '../../pages/partials/consts/actionsConstants.js';
+import { PRODUCTS, ORDERS, CATEGORIES, ADD_PRODUCTS } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
 
 // Actions
 export const products = (products) => {
     return {
-      type: 'PRODUCTS',
+      type: PRODUCTS,
       products
     }
   }
   
-  export const orders = (orders) => {  
-    return {
-      type: 'ORDERS',
-      orders
-    }
-  }
+  // export const orders = (orders) => {  
+  //   return {
+  //     type: 'ORDERS',
+  //     orders
+  //   }
+  // }
 
   export const categories = (categories) => {  
     return {
@@ -24,11 +24,16 @@ export const products = (products) => {
     }
   }
 
+  export const addProduct = (products) => {  
+    return {
+      type: ADD_PRODUCTS,
+      products
+    }
+  }
 
 
-  export function dispatchActions(url, actionType) {
-    // console.log(actionType);
-    
+
+  export function dispatchActions(url, actionType, data) {    
     return (dispatch) => {
       
       switch (actionType) {
@@ -51,6 +56,23 @@ export const products = (products) => {
           .then((response) => {
             dispatch(orders(response.data))
             return response;
+          })
+        break;
+        case ADD_PRODUCTS:
+          axios.post(url, 
+            
+          {
+            data
+            // headers: { 
+            //   "Access-Control-Allow-Origin": "*"
+            // }
+          })
+          .then((response) => {
+            // console.log(response);
+            dispatch(addProduct(response.data))
+          }).catch(e => {
+            console.log(e);
+            
           })
         break;
         default:

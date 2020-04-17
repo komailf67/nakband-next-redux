@@ -4,7 +4,6 @@ import { Col, Card, Table } from 'react-bootstrap';
 class Content extends Component {
     render() {
         let {title, children} = this.props;
-        console.log(this.props);
         
         return (
             <Col sm={9} className="text-right">

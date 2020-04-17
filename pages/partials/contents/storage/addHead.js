@@ -3,7 +3,7 @@ import { Form, Container, Row, Button, Card, ListGroup, Col } from 'react-bootst
 import withRedux from "next-redux-wrapper";
 import { initStore } from "../../../../redux/store";
 import { products, dispatchActions } from "../../../../redux/actions";
-import { CATEGORIES } from "../../consts/actionsConstants";
+import { CATEGORIES, ADD_PRODUCTS } from "../../consts/actionsConstants";
 import $ from "jquery";
 import DatePicker from 'react-datepicker2';
 import momentJalaali from 'moment-jalaali';
@@ -23,9 +23,7 @@ class AddHead extends Component {
         }
     }
 
-    updateCategorySelectBox = (newCategory) => {  
-        console.log(newCategory);
-            
+    updateCategorySelectBox = (newCategory) => {              
         this.setState({
             category: newCategory.value
         });
@@ -55,26 +53,29 @@ class AddHead extends Component {
     }
 
     submitForm = () => {
-        let newProduct = new Array();
-        let sellerDetails = {};
 
+        let sellerDetails = {};
         sellerDetails['sellerName'] = $('#seller').val();
         sellerDetails['invoiceNumber'] = $('#invoice-number').val();
         sellerDetails['phoneNumber'] = $('#phone-number').val();
         sellerDetails['date'] = $('.datepicker-input').val();
 
-        newProduct.push(sellerDetails);
-
+        let newProduct = new Array();
         $(".uncommon-inputs").each(function () {
             let item = {};
-            item['catgeory-id'] = $(this).find('select.category :selected').data('category-id');
+            item['category-id'] = $(this).find('select.category :selected').data('category-id');
             item['description'] = $(this).find('input.description').val();
             item['count'] = $(this).find('input.count').val();
             item['buy-price'] = $(this).find('input.buy-price').val();
             // item['date'] = $(this).find('input.date').val();
             newProduct.push(item);
         });
-        console.log(newProduct);
+
+        let products = {};
+        products['commonDetails'] = sellerDetails;
+        products['uncommonDetails'] = newProduct;
+        // console.log(products);
+        this.props.fetchData('http://127.0.0.1/api/products', ADD_PRODUCTS, products)
         
     }
 
@@ -150,13 +151,13 @@ class AddHead extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (url, actionType) => dispatch(dispatchActions(url, actionType)),
+        fetchData: (url, actionType, data) => dispatch(dispatchActions(url, actionType, data)),
     }
 }
 const mapStateToProps = (state) => {
-    // console.log(state);
+    console.log(state);
     return {
-        categories: state.categories
+        categories: state.categories.categories
     }
 }
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
