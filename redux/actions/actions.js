@@ -1,4 +1,4 @@
-import { PRODUCTS, ORDERS, CATEGORIES, ADD_PRODUCTS } from '../../pages/partials/consts/actionsConstants.js';
+import { PRODUCTS, ORDERS, CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
 
@@ -31,7 +31,12 @@ export const products = (products) => {
     }
   }
 
-
+  export const isFormSubmitted = ( success ) => {
+    return {
+      type: IS_FORM_SUBMITTED,
+      success
+    }
+  }
 
   export function dispatchActions(url, actionType, data) {    
     return (dispatch) => {
@@ -60,7 +65,6 @@ export const products = (products) => {
         break;
         case ADD_PRODUCTS:
           axios.post(url, 
-            
           {
             data
             // headers: { 
@@ -69,12 +73,15 @@ export const products = (products) => {
           })
           .then((response) => {
             // console.log(response);
+            dispatch(isFormSubmitted(response.data.success))
             dispatch(addProduct(response.data))
           }).catch(e => {
             console.log(e);
             
           })
         break;
+        case IS_FORM_SUBMITTED:
+          dispatch(isFormSubmitted(data))
         default:
           break;
       }

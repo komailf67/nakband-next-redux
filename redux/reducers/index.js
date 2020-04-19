@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
 import { productsReducer } from "./productsReducer";
 import { categoryReducer } from "./categoryReducer";
-import { ORDERS, PRODUCTS, CATEGORIES, ADD_PRODUCTS } from "../../pages/partials/consts/actionsConstants";
+import { formReducer } from "./formReducer";
 
 const rootReduces = combineReducers({
   categories: categoryReducer,
-  products: productsReducer
+  products: productsReducer,
+  formReducer: formReducer
 });
 
 export default rootReduces;

@@ -3,13 +3,11 @@ import { Form, Container, Row, Button, Card, ListGroup, Col } from 'react-bootst
 import withRedux from "next-redux-wrapper";
 import { initStore } from "../../../../redux/store";
 import { products, dispatchActions } from "../../../../redux/actions";
-import { CATEGORIES, ADD_PRODUCTS } from "../../consts/actionsConstants";
+import { CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED } from "../../consts/actionsConstants";
 import $ from "jquery";
 import DatePicker from 'react-datepicker2';
 import momentJalaali from 'moment-jalaali';
 // import 'react-datepicker2/src/style.min.css';
-
-
 
 
 class AddHead extends Component {
@@ -19,7 +17,7 @@ class AddHead extends Component {
 
         this.state = {
             category: '',
-            value: momentJalaali()
+            value: momentJalaali(),
         }
     }
 
@@ -37,7 +35,12 @@ class AddHead extends Component {
           $(this).parents('.uncommon-inputs').remove();
         })
         //END jquery functions
+    }
 
+    componentDidUpdate = () => {
+        if (this.props.isFormSubmitted) {           
+            this.resetForm()
+        }
     }
 
     addNewProductInputs = () => {
@@ -53,7 +56,6 @@ class AddHead extends Component {
     }
 
     submitForm = () => {
-
         let sellerDetails = {};
         sellerDetails['sellerName'] = $('#seller').val();
         sellerDetails['invoiceNumber'] = $('#invoice-number').val();
@@ -75,8 +77,17 @@ class AddHead extends Component {
         products['commonDetails'] = sellerDetails;
         products['uncommonDetails'] = newProduct;
         // console.log(products);
-        this.props.fetchData('http://127.0.0.1/api/products', ADD_PRODUCTS, products)
-        
+        this.props.fetchData('http://127.0.0.1/api/products', ADD_PRODUCTS, products);
+    }
+
+    resetForm = () => {
+        if (this.props.isFormSubmitted) {           
+            alert('محصول با موفقیت اضافه شد');
+            $('.btn-danger').parents('.uncommon-inputs').remove();
+            $('form').find("input").val("");
+            $('#categories').prop('selectedIndex',0);
+            this.props.fetchData('', IS_FORM_SUBMITTED, false)
+        }
     }
 
     render() {
@@ -90,7 +101,7 @@ class AddHead extends Component {
         return (
             <Form>
                 <Form.Row>
-                    <Form.Group as={Col} controlId="seller">
+                    <Form.Group as={Col} className="input" controlId="seller">
                         <Form.Label>نام فروشنده</Form.Label>
                         <Form.Control type="text" placeholder="" />
                     </Form.Group>
@@ -102,7 +113,7 @@ class AddHead extends Component {
 
                     <Form.Group as={Col} controlId="phone-number">
                         <Form.Label>شماره تماس</Form.Label>
-                        <Form.Control type="phone-number" placeholder="" />
+                        <Form.Control type="tel" placeholder="" />
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>تاریخ خرید</Form.Label>
@@ -115,7 +126,7 @@ class AddHead extends Component {
                     </Form.Group>
                 </Form.Row>
                 <Form.Row className="uncommon-inputs">
-                    <Form.Group as={Col} controlId="formGridState">
+                    <Form.Group as={Col} controlId="categories">
                         <Form.Label>دسته بندی</Form.Label>
                         <div className="d-flex">
                             <Button className="ml-1 new-product"
@@ -157,7 +168,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     console.log(state);
     return {
-        categories: state.categories.categories
+        categories: state.categories.categories,
+        isFormSubmitted: state.formReducer.isFormSubmitted,
     }
 }
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
