@@ -1,90 +1,111 @@
-import { PRODUCTS, ORDERS, CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED } from '../../pages/partials/consts/actionsConstants.js';
+import {
+    PRODUCTS,
+    ORDERS,
+    CATEGORIES,
+    ADD_PRODUCTS,
+    IS_FORM_SUBMITTED
+} from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
+import {SALES_INVOICES} from "../../pages/partials/consts/actionsConstants";
 
 
 // Actions
 export const products = (products) => {
     return {
-      type: PRODUCTS,
-      products
+        type: PRODUCTS,
+        products
     }
-  }
-  
-  // export const orders = (orders) => {  
-  //   return {
-  //     type: 'ORDERS',
-  //     orders
-  //   }
-  // }
+}
 
-  export const categories = (categories) => {  
+// export const orders = (orders) => {
+//   return {
+//     type: 'ORDERS',
+//     orders
+//   }
+// }
+
+export const categories = (categories) => {
     return {
-      type: CATEGORIES,
-      categories
+        type: CATEGORIES,
+        categories
     }
-  }
+}
 
-  export const addProduct = (products) => {  
+export const addProduct = (products) => {
     return {
-      type: ADD_PRODUCTS,
-      products
+        type: ADD_PRODUCTS,
+        products
     }
-  }
+}
 
-  export const isFormSubmitted = ( success ) => {
+export const isFormSubmitted = (success) => {
     return {
-      type: IS_FORM_SUBMITTED,
-      success
+        type: IS_FORM_SUBMITTED,
+        success
     }
-  }
+}
 
-  export function dispatchActions(url, actionType, data) {    
+export const salesInvoices = (salesInvoices) => {
+    return {
+        type: SALES_INVOICES,
+        salesInvoices
+    }
+}
+
+export function dispatchActions(url, actionType, data) {
     return (dispatch) => {
-      
-      switch (actionType) {
-        case PRODUCTS:
-          axios.get(url)
-            .then((response) => {
-              dispatch(products(response.data))
-              return response;
-            })
-          break;
-        case CATEGORIES:
-          axios.get(url)
-            .then((response) => {              
-              dispatch(categories(response.data))
-              return response;
-            })
-          break;
-        case ORDERS:
-        axios.get(url)
-          .then((response) => {
-            dispatch(orders(response.data))
-            return response;
-          })
-        break;
-        case ADD_PRODUCTS:
-          axios.post(url, 
-          {
-            data
-            // headers: { 
-            //   "Access-Control-Allow-Origin": "*"
-            // }
-          })
-          .then((response) => {
-            // console.log(response);
-            dispatch(isFormSubmitted(response.data.success))
-            dispatch(addProduct(response.data))
-          }).catch(e => {
-            console.log(e);
-            
-          })
-        break;
-        case IS_FORM_SUBMITTED:
-          dispatch(isFormSubmitted(data))
-        default:
-          break;
-      }
-  
+
+        switch (actionType) {
+            case PRODUCTS:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(products(response.data))
+                        return response;
+                    })
+                break;
+            case CATEGORIES:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(categories(response.data))
+                        return response;
+                    })
+                break;
+            case ORDERS:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(orders(response.data))
+                        return response;
+                    })
+                break;
+            case ADD_PRODUCTS:
+                axios.post(url,
+                    {
+                        data
+                        // headers: {
+                        //   "Access-Control-Allow-Origin": "*"
+                        // }
+                    })
+                    .then((response) => {
+                        // console.log(response);
+                        dispatch(isFormSubmitted(response.data.success))
+                        dispatch(addProduct(response.data))
+                    }).catch(e => {
+                    console.log(e);
+
+                })
+                break;
+            case IS_FORM_SUBMITTED:
+                dispatch(isFormSubmitted(data))
+            case SALES_INVOICES:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(salesInvoices(response.data))
+                        return response;
+                    })
+                break;
+            default:
+                break;
+        }
+
     }
-  }
+}
