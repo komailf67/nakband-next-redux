@@ -32,6 +32,7 @@ class InvoicesHead extends Component {
                         <th>گارانتی</th>
                         <th>بیمه</th>
                         <th>تاریخ فروش</th>
+                        <th>تاریخ ثبت</th>
                         <th>مبلغ فاکتور</th>
                     </tr>
                     </thead>
