@@ -25,7 +25,7 @@ class RightMenu extends Component {
             </a>
           )
         return (
-            <Col sm={3} className="text-right">
+            <Col sm={2} className="text-right">
                 <Card>
                     <Card.Header>منو</Card.Header>
                     <ListGroup variant="flush">

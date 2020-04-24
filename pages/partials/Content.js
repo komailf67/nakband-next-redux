@@ -6,7 +6,7 @@ class Content extends Component {
         let {title, children} = this.props;
         
         return (
-            <Col sm={9} className="text-right">
+            <Col sm={10} className="text-right">
                 <Card >
                     <Card.Header>{title}</Card.Header>
                     <Card.Body>

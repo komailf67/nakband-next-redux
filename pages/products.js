@@ -43,7 +43,7 @@ class Products extends Component {
         <Container>
           <Row>
             <RightMenu />
-            <Col sm={9} className="text-right">
+            <Col sm={10} className="text-right">
               <Card >
                 <Card.Header>Content</Card.Header>
                 <Card.Body>
