@@ -1,11 +1,12 @@
-import {ORDERS, PRODUCTS, CATEGORIES, ADD_PRODUCTS, SALES_INVOICES} from "../../pages/partials/consts/actionsConstants";
+import {SALES_INVOICES, SELECTED_PRODUCTS} from "../../pages/partials/consts/actionsConstants";
 
 const initialState = {
-    sales: []
+    sales: [],
 }
 
 export const salesReducer = (state = initialState, action) => {
-
+    // console.log('saleReducer', action);
+    
     switch (action.type) {
 
         case SALES_INVOICES:
@@ -13,6 +14,12 @@ export const salesReducer = (state = initialState, action) => {
                 ...state,
                 salesInvoices: action.salesInvoices
             }
+        case SELECTED_PRODUCTS:
+            return {
+                ...state,
+                selectedProductsIds: action.selectedProductsIds
+            }
+        
         default:
             return state
     }

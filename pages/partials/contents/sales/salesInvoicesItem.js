@@ -13,6 +13,7 @@ class SalesInvoicesItem extends Component {
                 <td>{saleInvoice.has_assurance}</td>
                 <td>{saleInvoice.date}</td>
                 <td>{saleInvoice.created_at}</td>
+                <td>۰</td>
                 <td>{saleInvoice.amount}</td>
             </tr>
         )

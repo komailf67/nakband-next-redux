@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { InputGroup } from 'react-bootstrap';
 
 class ProductsItem extends Component {
     render() {
@@ -10,8 +11,12 @@ class ProductsItem extends Component {
                 <td>{product.categoryTitle}</td>
                 <td>{product.description}</td>
                 <td>{product.buy_price}</td>
+                <td>{product.buy_count}</td>
                 <td>{product.exist_count}</td>
                 <td>{product.created_at}</td>
+                <td>
+                    <input type="checkbox" className="checked-product" data-product-id={product.id} />
+                </td>
             </tr>
         )
     }

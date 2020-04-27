@@ -16,7 +16,7 @@ class Index extends Component {
               <Card >
                 <Card.Header>Content</Card.Header>
                 <Card.Body>
-                  <h1>Wellcome</h1>
+                  <h1>Home</h1>
                 </Card.Body >
               </Card>
             </Col>

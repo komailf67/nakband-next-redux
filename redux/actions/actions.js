@@ -3,10 +3,16 @@ import {
     ORDERS,
     CATEGORIES,
     ADD_PRODUCTS,
-    IS_FORM_SUBMITTED
+    IS_FORM_SUBMITTED,
+    IS_OPEN_MODAL,
+    SELECTED_PRODUCTS,
+    SALE_PRODUCTS,
+    NEW_SERVICE,
+    SERVICES,
+    MESSAGE_SHOWED,
+    SALES_INVOICES
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
-import {SALES_INVOICES} from "../../pages/partials/consts/actionsConstants";
 
 
 // Actions
@@ -49,6 +55,48 @@ export const salesInvoices = (salesInvoices) => {
     return {
         type: SALES_INVOICES,
         salesInvoices
+    }
+}
+
+export const isOpenModal = (trueOrFalse) => {
+    return {
+        type: IS_OPEN_MODAL,
+        trueOrFalse
+    }
+}
+
+export const selectedProducts = (selectedProductsIds) => {
+    return {
+        type: SELECTED_PRODUCTS,
+        selectedProductsIds
+    }
+}
+
+export const saleProducts = (saleProducts) => {
+    return {
+        type: SALE_PRODUCTS,
+        payload: saleProducts
+    }
+}
+
+export const services = (services) => {
+    return {
+        type: SERVICES,
+        services
+    }
+}
+
+export const newService = (newService) => {   
+    return {
+        type: NEW_SERVICE,
+        newService
+    }
+}
+
+export const messageShowed = (trueOrFalse) => {    
+    return {
+        type: MESSAGE_SHOWED,
+        payload: trueOrFalse
     }
 }
 
@@ -102,6 +150,38 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(salesInvoices(response.data))
                         return response;
                     })
+                break;
+            case IS_OPEN_MODAL:                               
+                dispatch(isOpenModal(data))
+                break;
+            case SELECTED_PRODUCTS:
+                dispatch(selectedProducts(data))
+                break;
+            case SALE_PRODUCTS:
+                axios.post(url,{data})
+                    .then((response) => {
+                        dispatch(saleProducts(response.data))
+                        return response;
+                    })
+                break;
+            case SERVICES:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(services(response.data))
+                        return response;
+                    })
+                break;
+            case NEW_SERVICE:
+                axios.post(url,data)
+                    .then((response) => {
+                        dispatch(newService(response.data))
+                        return response;
+                    }).then(()=>{
+                        dispatch(messageShowed(0));
+                    })
+                break;
+            case MESSAGE_SHOWED:
+                dispatch(messageShowed(data))
                 break;
             default:
                 break;

@@ -7,6 +7,9 @@ import { CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED } from "../../consts/action
 import $ from "jquery";
 import DatePicker from 'react-datepicker2';
 import momentJalaali from 'moment-jalaali';
+import dynamic from "next/dynamic";
+// const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false})
+// const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false})
 // import 'react-datepicker2/src/style.min.css';
 
 
@@ -48,7 +51,6 @@ class AddHead extends Component {
         $(uncommonInputs[0]).clone().insertAfter(uncommonInputs[0]);
         $(document).find('button.new-product').each(function (index, value) {
           if (index > 0) {
-            console.log($(this).attr('calss'));
             $(this).removeClass('btn-success').addClass('btn-danger');
             $(this).html('-');
           }
