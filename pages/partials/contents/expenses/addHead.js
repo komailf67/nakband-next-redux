@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Container, Row, Button, Card, ListGroup, Col } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import withRedux from "next-redux-wrapper";
 import { initStore } from "../../../../redux/store";
-import { products, dispatchActions } from "../../../../redux/actions";
-import { NEW_SERVICE, MESSAGE_SHOWED } from "../../consts/actionsConstants";
+import { dispatchActions } from "../../../../redux/actions";
+import { NEW_EXPENSE, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import $ from "jquery";
 import DatePicker from 'react-datepicker2';
 import momentJalaali from 'moment-jalaali';
@@ -25,17 +25,18 @@ class AddHead extends Component {
   }
 
   submitForm = () => {
-    let newService = {};
+    let newExpense = {};
 
-    newService['category'] = $('#category').val();
-    newService['title'] = $('#title').val();
-    newService['date'] = $('.datepicker-input').val();
-    newService['total_amount'] = $('#total-amount').val();
-    newService['shop_share'] = $('#shop-share').val();
-
+    newExpense['category'] = $('#category').val();
+    newExpense['description'] = $('#description').val();
+    newExpense['total_amount'] = $('#total-amount').val();
+    newExpense['invoice_number'] = $('#invoice-number').val();
+    newExpense['date'] = $('.datepicker-input').val();
+    console.log('komail',newExpense);
+    
     //check all fields filled
     let formFilled = true;
-    $.each(newService, function(key, value) {
+    $.each(newExpense, function(key, value) {
       if (!value || value == 0) {
         alert('پر کردن همه فیلدها الزامی است');
         formFilled = false;
@@ -44,14 +45,15 @@ class AddHead extends Component {
     });
 
     if (formFilled) {
-      this.props.fetchData('http://127.0.0.1/api/services', NEW_SERVICE, newService);
+      this.props.fetchData('http://127.0.0.1/api/expenses', NEW_EXPENSE, newExpense);
     }
   }
 
   render() {
     let {messageShowed} = this.props.messageShowed;
-    if (this.props.newService) {  
-      let {message, success} = this.props.newService;
+
+    if (this.props.newExpense) {  
+      let {message, success} = this.props.newExpense;
       
       if (!messageShowed) {
         alert(message);
@@ -69,22 +71,23 @@ class AddHead extends Component {
             <Form.Label>دسته بندی</Form.Label>
             <Form.Control className="category" as="select">
               <option value={0}>Choose...</option>
-              <option>خدمات نرم افزاری</option>
-              <option>خدمات سخت افزاری</option>
-              <option>پورسانت فروش</option>
+              <option>هزینه روزانه</option>
+              <option>قبض</option>
+              <option>کرایه مغازه</option>
+              <option>خدمات</option>
             </Form.Control>
           </Form.Group>
           <Form.Group as={Col}>
-            <Form.Label>عنوان</Form.Label>
-            <Form.Control type="text" id="title" />
+            <Form.Label>توضیحات</Form.Label>
+            <Form.Control type="text" id="description" />
           </Form.Group>
           <Form.Group as={Col}>
-            <Form.Label>مبلغ کل</Form.Label>
+            <Form.Label>مبلغ</Form.Label>
             <Form.Control id="total-amount" />
           </Form.Group>
           <Form.Group as={Col}>
-            <Form.Label>سهم فروشگاه</Form.Label>
-            <Form.Control id="shop-share" />
+            <Form.Label>شماره فاکتور</Form.Label>
+            <Form.Control id="invoice-number" />
           </Form.Group>
           <Form.Group as={Col}>
             <Form.Label>تاریخ</Form.Label>
@@ -109,9 +112,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
-        newService: state.services.newService,
+        newExpense: state.expenses.newExpense,
         messageShowed: state.messageShowed,
     }
 }

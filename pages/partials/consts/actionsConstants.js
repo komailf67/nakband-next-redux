@@ -10,3 +10,5 @@ export const SALE_PRODUCTS = 'SALE_PRODUCTS';
 export const SERVICES = 'SERVICES';
 export const NEW_SERVICE = 'NEW_SERVICE';
 export const MESSAGE_SHOWED = 'MESSAGE_SHOWED';
+export const EXPENSES = 'EXPENSES';
+export const NEW_EXPENSE = 'NEW_EXPENSE';

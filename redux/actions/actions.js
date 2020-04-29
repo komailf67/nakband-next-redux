@@ -10,7 +10,9 @@ import {
     NEW_SERVICE,
     SERVICES,
     MESSAGE_SHOWED,
-    SALES_INVOICES
+    SALES_INVOICES,
+    EXPENSES,
+    NEW_EXPENSE
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -100,6 +102,22 @@ export const messageShowed = (trueOrFalse) => {
     }
 }
 
+export const expenses = (expenses) => {    
+    console.log('expenses', expenses);
+    
+    return {
+        type: EXPENSES,
+        payload: expenses
+    }
+}
+
+export const newExpense = (newExpense) => {   
+    return {
+        type: NEW_EXPENSE,
+        payload: newExpense
+    }
+}
+
 export function dispatchActions(url, actionType, data) {
     return (dispatch) => {
 
@@ -182,6 +200,22 @@ export function dispatchActions(url, actionType, data) {
                 break;
             case MESSAGE_SHOWED:
                 dispatch(messageShowed(data))
+                break;
+            case EXPENSES:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(expenses(response.data))
+                        return response;
+                    })
+                break;
+            case NEW_EXPENSE:
+                axios.post(url,data)
+                    .then((response) => {
+                        dispatch(newExpense(response.data))
+                        return response;
+                    }).then(()=>{
+                        dispatch(messageShowed(0));
+                    })
                 break;
             default:
                 break;
