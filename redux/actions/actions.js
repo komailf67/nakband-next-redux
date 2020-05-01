@@ -12,7 +12,10 @@ import {
     MESSAGE_SHOWED,
     SALES_INVOICES,
     EXPENSES,
-    NEW_EXPENSE
+    NEW_EXPENSE,
+    DEBTORS,
+    NEW_DEBTOR,
+    CHECKOUT_DEBT
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -102,9 +105,7 @@ export const messageShowed = (trueOrFalse) => {
     }
 }
 
-export const expenses = (expenses) => {    
-    console.log('expenses', expenses);
-    
+export const expenses = (expenses) => {       
     return {
         type: EXPENSES,
         payload: expenses
@@ -115,6 +116,27 @@ export const newExpense = (newExpense) => {
     return {
         type: NEW_EXPENSE,
         payload: newExpense
+    }
+}
+
+export const debtors = (debtors) => {       
+    return {
+        type: DEBTORS,
+        payload: debtors
+    }
+}
+
+export const newDebtor = (newDebtor) => {   
+    return {
+        type: NEW_DEBTOR,
+        payload: newDebtor
+    }
+}
+
+export const checkoutDebt = (id) => {   
+    return {
+        type: CHECKOUT_DEBT,
+        payload: id
     }
 }
 
@@ -212,6 +234,31 @@ export function dispatchActions(url, actionType, data) {
                 axios.post(url,data)
                     .then((response) => {
                         dispatch(newExpense(response.data))
+                        return response;
+                    }).then(()=>{
+                        dispatch(messageShowed(0));
+                    })
+                break;
+            case DEBTORS:
+            axios.get(url)
+                .then((response) => {
+                    dispatch(debtors(response.data))
+                    return response;
+                })
+            break;
+            case NEW_DEBTOR:
+                axios.post(url,data)
+                    .then((response) => {
+                        dispatch(newDebtor(response.data))
+                        return response;
+                    }).then(()=>{
+                        dispatch(messageShowed(0));
+                    })
+                break;
+            case CHECKOUT_DEBT:
+                axios.delete(url,data)
+                    .then((response) => {
+                        dispatch(checkoutDebt(response.data))
                         return response;
                     }).then(()=>{
                         dispatch(messageShowed(0));

@@ -7,6 +7,7 @@ import {modalReducer} from "./modalReducer";
 import {serviceReducer} from "./serviceReducer";
 import {messageReducer} from "./messageReducer";
 import {expensesReducer} from "./expensesReducer";
+import {debtorsReducer} from "./debtorsReducer";
 
 const rootReduces = combineReducers({
     categories: categoryReducer,
@@ -16,7 +17,8 @@ const rootReduces = combineReducers({
     isOpenModal: modalReducer,
     services: serviceReducer,
     messageShowed: messageReducer,
-    expenses: expensesReducer
+    expenses: expensesReducer,
+    debtors: debtorsReducer,
 });
 
 export default rootReduces;
