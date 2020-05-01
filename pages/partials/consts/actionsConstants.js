@@ -15,3 +15,5 @@ export const NEW_EXPENSE = 'NEW_EXPENSE';
 export const DEBTORS = 'DEBTORS';
 export const NEW_DEBTOR = 'NEW_DEBTOR';
 export const CHECKOUT_DEBT = 'CHECKOUT_DEBT';
+export const NEW_SALARY = 'NEW_SALARY';
+export const SALARIES = 'SALARIES';

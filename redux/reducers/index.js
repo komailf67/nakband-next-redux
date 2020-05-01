@@ -8,6 +8,7 @@ import {serviceReducer} from "./serviceReducer";
 import {messageReducer} from "./messageReducer";
 import {expensesReducer} from "./expensesReducer";
 import {debtorsReducer} from "./debtorsReducer";
+import {salariesReducer} from "./salariesReducer";
 
 const rootReduces = combineReducers({
     categories: categoryReducer,
@@ -19,6 +20,7 @@ const rootReduces = combineReducers({
     messageShowed: messageReducer,
     expenses: expensesReducer,
     debtors: debtorsReducer,
+    salaries: salariesReducer,
 });
 
 export default rootReduces;

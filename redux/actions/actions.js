@@ -15,7 +15,9 @@ import {
     NEW_EXPENSE,
     DEBTORS,
     NEW_DEBTOR,
-    CHECKOUT_DEBT
+    CHECKOUT_DEBT,
+    SALARIES,
+    NEW_SALARY
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -137,6 +139,20 @@ export const checkoutDebt = (id) => {
     return {
         type: CHECKOUT_DEBT,
         payload: id
+    }
+}
+
+export const newSalary = (newSalary) => {   
+    return {
+        type: NEW_SALARY,
+        payload: newSalary
+    }
+}
+
+export const salaries = (salaries) => {      
+    return {
+        type: SALARIES,
+        payload: salaries
     }
 }
 
@@ -264,6 +280,22 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(messageShowed(0));
                     })
                 break;
+            case SALARIES:                
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(salaries(response.data))
+                        return response;
+                    })
+                break;
+            case NEW_SALARY:
+            axios.post(url,data)
+                .then((response) => {                   
+                    dispatch(newSalary(response.data))
+                    return response;
+                }).then(()=>{
+                    dispatch(messageShowed(0));
+                })
+            break;
             default:
                 break;
         }

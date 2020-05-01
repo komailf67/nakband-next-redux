@@ -54,6 +54,9 @@ class RightMenu extends Component {
                             <Link href="/expenses/expenses">لیست هزینه ها</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
+                            <Link href="/salaries/salaries">حقوق ها</Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
                             <Link href="/debtors/debtors">بدهکارها</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
