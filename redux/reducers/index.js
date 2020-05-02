@@ -9,6 +9,7 @@ import {messageReducer} from "./messageReducer";
 import {expensesReducer} from "./expensesReducer";
 import {debtorsReducer} from "./debtorsReducer";
 import {salariesReducer} from "./salariesReducer";
+import {investorsSalariesReducer} from "./investorsSalariesReducer";
 
 const rootReduces = combineReducers({
     categories: categoryReducer,
@@ -21,6 +22,7 @@ const rootReduces = combineReducers({
     expenses: expensesReducer,
     debtors: debtorsReducer,
     salaries: salariesReducer,
+    investorsSalaries: investorsSalariesReducer
 });
 
 export default rootReduces;

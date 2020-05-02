@@ -17,7 +17,9 @@ import {
     NEW_DEBTOR,
     CHECKOUT_DEBT,
     SALARIES,
-    NEW_SALARY
+    NEW_SALARY,
+    NEW_INVESTOR_SALARY,
+    INVESTORS_SALARIES,
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -156,6 +158,20 @@ export const salaries = (salaries) => {
     }
 }
 
+export const investorsSalaries = (investorsSalaries) => {      
+    return {
+        type: INVESTORS_SALARIES,
+        payload: investorsSalaries
+    }
+}
+
+export const newInvestorsSalary = (newInvestorSalary) => {   
+    return {
+        type: NEW_INVESTOR_SALARY,
+        payload: newInvestorSalary
+    }
+}
+
 export function dispatchActions(url, actionType, data) {
     return (dispatch) => {
 
@@ -288,14 +304,30 @@ export function dispatchActions(url, actionType, data) {
                     })
                 break;
             case NEW_SALARY:
-            axios.post(url,data)
-                .then((response) => {                   
-                    dispatch(newSalary(response.data))
-                    return response;
-                }).then(()=>{
-                    dispatch(messageShowed(0));
-                })
-            break;
+                axios.post(url,data)
+                    .then((response) => {                   
+                        dispatch(newSalary(response.data))
+                        return response;
+                    }).then(()=>{
+                        dispatch(messageShowed(0));
+                    })
+                break;
+            case INVESTORS_SALARIES:                
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(investorsSalaries(response.data))
+                        return response;
+                    })
+                break;
+            case NEW_INVESTOR_SALARY:
+                axios.post(url,data)
+                    .then((response) => {                   
+                        dispatch(newInvestorsSalary(response.data))
+                        return response;
+                    }).then(()=>{
+                        dispatch(messageShowed(0));
+                    })
+                break;
             default:
                 break;
         }
