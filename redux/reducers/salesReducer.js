@@ -1,4 +1,4 @@
-import {SALES_INVOICES, SELECTED_PRODUCTS} from "../../pages/partials/consts/actionsConstants";
+import {SALES_INVOICES, SELECTED_PRODUCTS, SOLD_PRODUCTS} from "../../pages/partials/consts/actionsConstants";
 
 const initialState = {
     sales: [],
@@ -19,7 +19,12 @@ export const salesReducer = (state = initialState, action) => {
                 ...state,
                 selectedProductsIds: action.selectedProductsIds
             }
-        
+        case SOLD_PRODUCTS:
+            return {
+                ...state,
+                soldProducts: action.payload
+            }
+    
         default:
             return state
     }

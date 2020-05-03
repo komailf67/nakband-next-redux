@@ -20,6 +20,7 @@ import {
     NEW_SALARY,
     NEW_INVESTOR_SALARY,
     INVESTORS_SALARIES,
+    SOLD_PRODUCTS,
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -81,10 +82,27 @@ export const selectedProducts = (selectedProductsIds) => {
     }
 }
 
+/**
+ * 
+ * @param {*} saleProducts 
+ * for list of products that selected for sale(in modal)
+ */
 export const saleProducts = (saleProducts) => {
     return {
         type: SALE_PRODUCTS,
         payload: saleProducts
+    }
+}
+
+/**
+ * 
+ * @param {*} saleProducts 
+ * for list of products that sold
+ */
+export const soldProducts = (soldProducts) => {
+    return {
+        type: SOLD_PRODUCTS,
+        payload: soldProducts
     }
 }
 
@@ -233,6 +251,13 @@ export function dispatchActions(url, actionType, data) {
                 axios.post(url,{data})
                     .then((response) => {
                         dispatch(saleProducts(response.data))
+                        return response;
+                    })
+                break;
+            case SOLD_PRODUCTS:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(soldProducts(response.data))
                         return response;
                     })
                 break;

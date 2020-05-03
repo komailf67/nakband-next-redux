@@ -3,7 +3,7 @@ import { Form, Button, Col } from 'react-bootstrap';
 import withRedux from "next-redux-wrapper";
 import { initStore } from "../../../../redux/store";
 import { dispatchActions } from "../../../../redux/actions";
-import { NEW_INVESTOR_SALARY, INVESTORS, MESSAGE_SHOWED } from "../../consts/actionsConstants";
+import { NEW_INVESTOR_SALARY, INVESTORS, MESSAGE_SHOWEDخب  } from "../../consts/actionsConstants";
 import $ from "jquery";
 import DatePicker from 'react-datepicker2';
 import momentJalaali from 'moment-jalaali';

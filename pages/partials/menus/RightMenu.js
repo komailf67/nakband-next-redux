@@ -39,6 +39,9 @@ class RightMenu extends Component {
                             <Link href="/storage/add">اضافه کردن محصول</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
+                            <Link href="/sales/products">محصولات فروخته شده</Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
                             <Link href="/sales/invoices">فاکتورهای فروش</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
