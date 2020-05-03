@@ -43,6 +43,7 @@ class SaleModal extends Component {
             let eachProduct = {};            
             eachProduct['id'] = $(value).find('td.product-id').data('product-id');
             eachProduct['count'] = $(value).find('select.exist_count').val();
+            eachProduct['total_amount'] = $(value).find('input.sum-sale-price').val();
             eachProduct['buyPrice'] = $(value).find('td.buy-price').data('buy-price');
             eachProduct['sumSalePrice'] = $(value).find('input.sum-sale-price').val();
             productsDetails.push(eachProduct)

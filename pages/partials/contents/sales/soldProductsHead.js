@@ -26,6 +26,7 @@ class SoldProductsHead extends Component {
                     <thead>
                     <tr>
                         <th>ردیف</th>
+                        <th>شناسه</th>
                         <th>دسته بندی</th>
                         <th>محصول</th>
                         <th>تعداد</th>

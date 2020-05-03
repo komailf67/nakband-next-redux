@@ -6,11 +6,12 @@ class SoldProductsItem extends Component {
         return (
             <tr>
                 <td>{row + 1}</td>
+                <td>{soldProduct.id}</td>
                 <td>{soldProduct.category_title}</td>
                 <td>{soldProduct.description}</td>
                 <td>{soldProduct.count}</td>
                 <td>{soldProduct.buy_price}</td>
-                <td>0</td>
+                <td>{Math.round(Number(soldProduct.total_amount)/Number(soldProduct.count))}</td>
                 <td>{soldProduct.buy_invoice_id}</td>
                 <td>{soldProduct.saleInvoice_id}</td>
                 <td>{soldProduct.customer_name}</td>
