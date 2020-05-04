@@ -33,6 +33,9 @@ class RightMenu extends Component {
                             <Link href="/">Home</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
+                            <Link href="/transactions/transactions">ثبت تراکنش ها</Link>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
                             <Link href="/storage/products">انبار</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>

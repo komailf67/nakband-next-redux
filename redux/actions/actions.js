@@ -21,6 +21,8 @@ import {
     NEW_INVESTOR_SALARY,
     INVESTORS_SALARIES,
     SOLD_PRODUCTS,
+    TRANSACTIONS,
+    NEW_TRANSACTION
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -113,80 +115,94 @@ export const services = (services) => {
     }
 }
 
-export const newService = (newService) => {   
+export const newService = (newService) => {
     return {
         type: NEW_SERVICE,
         newService
     }
 }
 
-export const messageShowed = (trueOrFalse) => {    
+export const messageShowed = (trueOrFalse) => {
     return {
         type: MESSAGE_SHOWED,
         payload: trueOrFalse
     }
 }
 
-export const expenses = (expenses) => {       
+export const expenses = (expenses) => {
     return {
         type: EXPENSES,
         payload: expenses
     }
 }
 
-export const newExpense = (newExpense) => {   
+export const newExpense = (newExpense) => {
     return {
         type: NEW_EXPENSE,
         payload: newExpense
     }
 }
 
-export const debtors = (debtors) => {       
+export const debtors = (debtors) => {
     return {
         type: DEBTORS,
         payload: debtors
     }
 }
 
-export const newDebtor = (newDebtor) => {   
+export const newDebtor = (newDebtor) => {
     return {
         type: NEW_DEBTOR,
         payload: newDebtor
     }
 }
 
-export const checkoutDebt = (id) => {   
+export const checkoutDebt = (id) => {
     return {
         type: CHECKOUT_DEBT,
         payload: id
     }
 }
 
-export const newSalary = (newSalary) => {   
+export const newSalary = (newSalary) => {
     return {
         type: NEW_SALARY,
         payload: newSalary
     }
 }
 
-export const salaries = (salaries) => {      
+export const salaries = (salaries) => {
     return {
         type: SALARIES,
         payload: salaries
     }
 }
 
-export const investorsSalaries = (investorsSalaries) => {      
+export const investorsSalaries = (investorsSalaries) => {
     return {
         type: INVESTORS_SALARIES,
         payload: investorsSalaries
     }
 }
 
-export const newInvestorsSalary = (newInvestorSalary) => {   
+export const newInvestorsSalary = (newInvestorSalary) => {
     return {
         type: NEW_INVESTOR_SALARY,
         payload: newInvestorSalary
+    }
+}
+
+export const transactions = (transactions) => {
+    return {
+        type: TRANSACTIONS,
+        payload: transactions
+    }
+}
+
+export const newTransaction = (newTransaction) => {
+    return {
+        type: NEW_TRANSACTION,
+        payload: newTransaction
     }
 }
 
@@ -228,9 +244,9 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(isFormSubmitted(response.data.success))
                         dispatch(addProduct(response.data))
                     }).catch(e => {
-                    console.log(e);
+                        console.log(e);
 
-                })
+                    })
                 break;
             case IS_FORM_SUBMITTED:
                 dispatch(isFormSubmitted(data))
@@ -241,14 +257,14 @@ export function dispatchActions(url, actionType, data) {
                         return response;
                     })
                 break;
-            case IS_OPEN_MODAL:                               
+            case IS_OPEN_MODAL:
                 dispatch(isOpenModal(data))
                 break;
             case SELECTED_PRODUCTS:
                 dispatch(selectedProducts(data))
                 break;
             case SALE_PRODUCTS:
-                axios.post(url,{data})
+                axios.post(url, { data })
                     .then((response) => {
                         dispatch(saleProducts(response.data))
                         return response;
@@ -269,11 +285,11 @@ export function dispatchActions(url, actionType, data) {
                     })
                 break;
             case NEW_SERVICE:
-                axios.post(url,data)
+                axios.post(url, data)
                     .then((response) => {
                         dispatch(newService(response.data))
                         return response;
-                    }).then(()=>{
+                    }).then(() => {
                         dispatch(messageShowed(0));
                     })
                 break;
@@ -288,40 +304,40 @@ export function dispatchActions(url, actionType, data) {
                     })
                 break;
             case NEW_EXPENSE:
-                axios.post(url,data)
+                axios.post(url, data)
                     .then((response) => {
                         dispatch(newExpense(response.data))
                         return response;
-                    }).then(()=>{
+                    }).then(() => {
                         dispatch(messageShowed(0));
                     })
                 break;
             case DEBTORS:
-            axios.get(url)
-                .then((response) => {
-                    dispatch(debtors(response.data))
-                    return response;
-                })
-            break;
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(debtors(response.data))
+                        return response;
+                    })
+                break;
             case NEW_DEBTOR:
-                axios.post(url,data)
+                axios.post(url, data)
                     .then((response) => {
                         dispatch(newDebtor(response.data))
                         return response;
-                    }).then(()=>{
+                    }).then(() => {
                         dispatch(messageShowed(0));
                     })
                 break;
             case CHECKOUT_DEBT:
-                axios.delete(url,data)
+                axios.delete(url, data)
                     .then((response) => {
                         dispatch(checkoutDebt(response.data))
                         return response;
-                    }).then(()=>{
+                    }).then(() => {
                         dispatch(messageShowed(0));
                     })
                 break;
-            case SALARIES:                
+            case SALARIES:
                 axios.get(url)
                     .then((response) => {
                         dispatch(salaries(response.data))
@@ -329,15 +345,15 @@ export function dispatchActions(url, actionType, data) {
                     })
                 break;
             case NEW_SALARY:
-                axios.post(url,data)
-                    .then((response) => {                   
+                axios.post(url, data)
+                    .then((response) => {
                         dispatch(newSalary(response.data))
                         return response;
-                    }).then(()=>{
+                    }).then(() => {
                         dispatch(messageShowed(0));
                     })
                 break;
-            case INVESTORS_SALARIES:                
+            case INVESTORS_SALARIES:
                 axios.get(url)
                     .then((response) => {
                         dispatch(investorsSalaries(response.data))
@@ -345,11 +361,27 @@ export function dispatchActions(url, actionType, data) {
                     })
                 break;
             case NEW_INVESTOR_SALARY:
-                axios.post(url,data)
-                    .then((response) => {                   
+                axios.post(url, data)
+                    .then((response) => {
                         dispatch(newInvestorsSalary(response.data))
                         return response;
-                    }).then(()=>{
+                    }).then(() => {
+                        dispatch(messageShowed(0));
+                    })
+                break;
+            case TRANSACTIONS:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(transactions(response.data))
+                        return response;
+                    })
+                break;
+            case NEW_TRANSACTION:
+                axios.post(url, data)
+                    .then((response) => {
+                        dispatch(newTransaction(response.data))
+                        return response;
+                    }).then(() => {
                         dispatch(messageShowed(0));
                     })
                 break;
