@@ -22,7 +22,9 @@ import {
     INVESTORS_SALARIES,
     SOLD_PRODUCTS,
     TRANSACTIONS,
-    NEW_TRANSACTION
+    NEW_TRANSACTION,
+    NEW_BALANCE,
+    BALANCES
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -206,6 +208,20 @@ export const newTransaction = (newTransaction) => {
     }
 }
 
+export const balances = (balances) => {
+    return {
+        type: BALANCES,
+        payload: balances
+    }
+}
+
+export const newBalance = (newBalance) => {
+    return {
+        type: NEW_BALANCE,
+        payload: newBalance
+    }
+}
+
 export function dispatchActions(url, actionType, data) {
     return (dispatch) => {
 
@@ -380,6 +396,22 @@ export function dispatchActions(url, actionType, data) {
                 axios.post(url, data)
                     .then((response) => {
                         dispatch(newTransaction(response.data))
+                        return response;
+                    }).then(() => {
+                        dispatch(messageShowed(0));
+                    })
+                break;
+            case BALANCES:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(balances(response.data))
+                        return response;
+                    })
+                break;
+            case NEW_BALANCE:
+                axios.post(url, data)
+                    .then((response) => {
+                        dispatch(newBalance(response.data))
                         return response;
                     }).then(() => {
                         dispatch(messageShowed(0));
