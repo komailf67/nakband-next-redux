@@ -87,8 +87,8 @@ export const selectedProducts = (selectedProductsIds) => {
 }
 
 /**
- * 
- * @param {*} saleProducts 
+ *
+ * @param {*} saleProducts
  * for list of products that selected for sale(in modal)
  */
 export const saleProducts = (saleProducts) => {
@@ -99,8 +99,8 @@ export const saleProducts = (saleProducts) => {
 }
 
 /**
- * 
- * @param {*} saleProducts 
+ *
+ * @param {*} saleProducts
  * for list of products that sold
  */
 export const soldProducts = (soldProducts) => {
@@ -260,9 +260,9 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(isFormSubmitted(response.data.success))
                         dispatch(addProduct(response.data))
                     }).catch(e => {
-                        console.log(e);
+                    console.log(e);
 
-                    })
+                })
                 break;
             case IS_FORM_SUBMITTED:
                 dispatch(isFormSubmitted(data))
@@ -280,11 +280,13 @@ export function dispatchActions(url, actionType, data) {
                 dispatch(selectedProducts(data))
                 break;
             case SALE_PRODUCTS:
-                axios.post(url, { data })
+                axios.post(url, {data})
                     .then((response) => {
                         dispatch(saleProducts(response.data))
                         return response;
-                    })
+                    }).then(() => {
+                    dispatch(isOpenModal(0));
+                })
                 break;
             case SOLD_PRODUCTS:
                 axios.get(url)
@@ -306,8 +308,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newService(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case MESSAGE_SHOWED:
                 dispatch(messageShowed(data))
@@ -325,8 +327,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newExpense(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case DEBTORS:
                 axios.get(url)
@@ -341,8 +343,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newDebtor(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case CHECKOUT_DEBT:
                 axios.delete(url, data)
@@ -350,8 +352,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(checkoutDebt(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case SALARIES:
                 axios.get(url)
@@ -366,8 +368,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newSalary(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case INVESTORS_SALARIES:
                 axios.get(url)
@@ -382,8 +384,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newInvestorsSalary(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case TRANSACTIONS:
                 axios.get(url)
@@ -398,8 +400,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newTransaction(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             case BALANCES:
                 axios.get(url)
@@ -414,8 +416,8 @@ export function dispatchActions(url, actionType, data) {
                         dispatch(newBalance(response.data))
                         return response;
                     }).then(() => {
-                        dispatch(messageShowed(0));
-                    })
+                    dispatch(messageShowed(0));
+                })
                 break;
             default:
                 break;

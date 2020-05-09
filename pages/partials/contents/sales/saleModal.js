@@ -22,7 +22,7 @@ class SaleModal extends Component {
     }
 
     componentDidMount = () => {
-        let thisProps = this.props;
+        let This = this;
         $('button.btn-success').click(function () {
             let commonDetails = {};
             commonDetails['buyerName'] = $('#seller').val();
@@ -31,7 +31,6 @@ class SaleModal extends Component {
             commonDetails['assurance'] = $('#assurance').val();
             commonDetails['date'] = $('.datepicker-input').val();
             commonDetails['amount'] = $('#invoice-sum').val();
-            // console.log(commonDetails);
 
             let products = $('tr.product-for-sale');
             let productsDetails = [];
@@ -47,7 +46,7 @@ class SaleModal extends Component {
             let soldProducts = {};
             soldProducts['commonDetails'] = commonDetails;
             soldProducts['uncommonDetails'] = productsDetails;
-            thisProps.fetchData('http://127.0.0.1/api/sales', SALE_PRODUCTS, soldProducts);
+            This.props.fetchData('http://127.0.0.1/api/sales', SALE_PRODUCTS, soldProducts);
         });
     }
 
@@ -57,7 +56,7 @@ class SaleModal extends Component {
 
     render() {
         let { is_open_modal, products, selectedProductsIds } = this.props;
-        let selectedProductsRows = $.map(products, function (value, index) {            
+        let selectedProductsRows = $.map(products, function (value, index) {
             if (selectedProductsIds.indexOf(value.id) !== -1) {
                 return [<SalesInvoicesItemModal key={index} row={index} product={value} />]
             }
@@ -144,14 +143,13 @@ class SaleModal extends Component {
                 <button
                     type="button"
                     className="btn btn-success"
-                    // onClick={this.submitSale}
                 >
                     فروش
                 </button>
                 <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={products ? this.toggle : null }
+                    onClick={this.toggle}
                 >
                     لغو
                 </button>
@@ -166,13 +164,5 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: (url, actionType, data) => dispatch(dispatchActions(url, actionType, data)),
     }
 }
-const mapStateToProps = (state) => {
-    // console.log('f',state);
-    return {
-        is_open_modal: state.isOpenModal.is_open_modal,
-        selectedProductsIds: state.sales.selectedProductsIds,
-        products: state.products.products.data
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SaleModal);
+export default connect(null, mapDispatchToProps)(SaleModal);
