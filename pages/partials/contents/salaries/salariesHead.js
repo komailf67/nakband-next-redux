@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Button } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
 import SalariesItem from "./salariesItem";
 import { dispatchActions } from "../../../../redux/actions";
-import { SALARIES } from "../../consts/actionsConstants";
+import {MESSAGE_SHOWED, SALARIES} from "../../consts/actionsConstants";
 import AddHead from "./addHead";
 import $ from "jquery";
+import {connect} from "react-redux";
 
 class SalariesHead extends Component {
 
@@ -15,13 +14,26 @@ class SalariesHead extends Component {
     }
 
     render() {
-        let { salaries } = this.props;
+        let { salaries, messageShowed, newSalary } = this.props;
         
-        let salariyRow = [];
+        let salaryRow = [];
         if (salaries) {
-            salariyRow = $.map(salaries.data, function (value, index) {
+            salaryRow = salaries.map((value, index) => {
                 return [<SalariesItem key={index} row={index} salary={value} />];
             });
+        }
+
+        if (newSalary) {
+            let {message, success} = newSalary;
+
+            if (!messageShowed) {
+                alert(message);
+                this.props.fetchData('', MESSAGE_SHOWED, 1);
+            }
+
+            if (success) {
+                $('form').find("input").val("");
+            }
         }
 
         return (
@@ -41,7 +53,7 @@ class SalariesHead extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {salariyRow}
+                        {salaryRow}
                     </tbody>
                 </Table>
             </div>
@@ -56,8 +68,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {   
     return {
-        salaries: state.salaries.salaries,
+        salaries: state.salaries.salaries.data,
+        messageShowed: state.messageShowed.messageShowed,
+        newSalary:state.salaries.newSalary
     }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(SalariesHead);
+export default connect(mapStateToProps, mapDispatchToProps)(SalariesHead);

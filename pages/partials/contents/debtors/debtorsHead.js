@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Button } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
 import DebtorsItem from "./debtorsItem";
 import { dispatchActions } from "../../../../redux/actions";
-import { DEBTORS } from "../../consts/actionsConstants";
+import {DEBTORS, MESSAGE_SHOWED} from "../../consts/actionsConstants";
 import AddHead from "./addHead";
 import $ from "jquery";
+import {connect} from "react-redux";
 
 class DebtorsHead extends Component {
 
@@ -15,13 +14,26 @@ class DebtorsHead extends Component {
     }
 
     render() {
-        let { debtors } = this.props;
-        
+        let { debtors, messageShowed, newDebtor } = this.props;
+
         let debtorRow = [];
         if (debtors) {
-            debtorRow = $.map(debtors.data, function (value, index) {
+            debtorRow = debtors.map((value, index) =>  {
                 return [<DebtorsItem key={index} row={index} debtor={value} />];
             });
+        }
+
+        if (newDebtor) {
+            let {message, success} = this.props.newDebtor;
+
+            if (!messageShowed) {
+                alert(message);
+                this.props.fetchData('', MESSAGE_SHOWED, 1);
+            }
+            if (success) {
+                $('form').find("input").val("");
+                $('#category').prop('selectedIndex',0);
+            }
         }
 
         return (
@@ -52,10 +64,12 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: (url, actionType, data) => dispatch(dispatchActions(url, actionType, data)),
     }
 }
-const mapStateToProps = (state) => {   
+const mapStateToProps = (state) => {
     return {
-        debtors: state.debtors.debtors,
+        messageShowed: state.messageShowed.messageShowed,
+        newDebtor:state.debtors.newDebtor,
+        debtors: state.debtors.debtors.data,
     }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(DebtorsHead);
+export default connect(mapStateToProps, mapDispatchToProps)(DebtorsHead);

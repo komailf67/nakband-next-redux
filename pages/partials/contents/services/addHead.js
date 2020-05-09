@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Container, Row, Button, Card, ListGroup, Col } from 'react-bootstrap';
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import { products, dispatchActions } from "../../../../redux/actions";
 import { NEW_SERVICE, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import $ from "jquery";
-import DatePicker from 'react-datepicker2';
-import momentJalaali from 'moment-jalaali';
-// import 'react-datepicker2/src/style.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../../styles.css';
-
-
-
+import dynamic from "next/dynamic";
+const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false});
+const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false});
 
 class AddHead extends Component {
 
@@ -20,7 +14,7 @@ class AddHead extends Component {
     super(props);
 
     this.state = {
-      value: momentJalaali(),
+      value: '',
     }
   }
 
@@ -109,10 +103,9 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         newService: state.services.newService,
         messageShowed: state.messageShowed,
     }
 }
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
+export default connect(mapStateToProps, mapDispatchToProps)(AddHead);

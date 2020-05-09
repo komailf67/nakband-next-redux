@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Button } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
 import BalancesItem from "./balancesItem";
 import { dispatchActions } from "../../../../redux/actions";
-import { BALANCES } from "../../consts/actionsConstants";
+import {BALANCES, MESSAGE_SHOWED} from "../../consts/actionsConstants";
 import AddHead from "./addHead";
 import $ from "jquery";
+import {connect} from "react-redux";
 
 class BalanceHead extends Component {
 
@@ -15,13 +14,26 @@ class BalanceHead extends Component {
   }
 
   render() {
-    let { balances } = this.props;
+    let { balances, messageShowed, newBalance } = this.props;
 
     let balanceRow = [];
     if (balances) {
-      balanceRow = $.map(balances.data, function (value, index) {
+      balanceRow = balances.map((value, index) => {
         return [<BalancesItem key={index} row={index} balance={value} />];
       });
+    }
+
+    if (newBalance) {
+      let {message, success} = newBalance;
+
+      if (!messageShowed) {
+        alert(message);
+        this.props.fetchData('', MESSAGE_SHOWED, 1);
+      }
+      if (success) {
+        $('form').find("input").val("");
+        $('form').find("textarea").val("");
+      }
     }
 
     return (
@@ -56,8 +68,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
   return {
-    balances: state.balances.balances,
+    balances: state.balances.balances.data,
+    messageShowed: state.messageShowed.messageShowed,
+    newBalance:state.balances.newBalance
   }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(BalanceHead);
+export default connect(mapStateToProps, mapDispatchToProps)(BalanceHead);

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Table } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import InvestorsItem from "./investorsItem";
 import { dispatchActions } from "../../../../redux/actions";
-import { INVESTORS_SALARIES, NEW_INVESTOR_SALARY } from "../../consts/actionsConstants";
+import { INVESTORS_SALARIES, NEW_INVESTOR_SALARY, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import AddHead from "./addHead";
 import $ from "jquery";
 
@@ -15,13 +14,25 @@ class InvestorsHead extends Component {
     }
 
     render() {
-        let { investorsSalaries } = this.props;
+        let { investorsSalaries, messageShowed, newInvestorSalary } = this.props;
         
         let investorSalariesRow = [];
         if (investorsSalaries) {
-            investorSalariesRow = $.map(investorsSalaries.data, function (value, index) {
+            investorSalariesRow = investorsSalaries.map((value, index) => {
                 return [<InvestorsItem key={index} row={index} investor={value} />];
-            });
+            })
+        }
+
+        if (newInvestorSalary) {
+            let {message, success} = newInvestorSalary;
+
+            if (!messageShowed) {
+                alert(message);
+                this.props.fetchData('', MESSAGE_SHOWED, 1);
+            }
+            if (success) {
+                $('form').find("input").val("");
+            }
         }
 
         return (
@@ -53,8 +64,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {   
     return {
-        investorsSalaries: state.investorsSalaries.investorsSalaries,
+        investorsSalaries: state.investorsSalaries.investorsSalaries.data,
+        messageShowed: state.messageShowed.messageShowed,
+        newInvestorSalary:state.investorsSalaries.newInvestorSalary
     }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(InvestorsHead);
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorsHead);

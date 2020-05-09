@@ -9,8 +9,6 @@ export const productsReducer = (state = initialState, action) => {
     switch (action.type) {
       
       case PRODUCTS:
-        console.log('dddddddd');
-        
         return {
           ...state,
           products: action.products

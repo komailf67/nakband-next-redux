@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import withRedux from "next-redux-wrapper";
+import {connect} from "react-redux";
 import { initStore } from "../../../../redux/store";
 import { dispatchActions } from "../../../../redux/actions";
 import { NEW_EXPENSE, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import $ from "jquery";
-import DatePicker from 'react-datepicker2';
-import momentJalaali from 'moment-jalaali';
-// import 'react-datepicker2/src/style.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../../styles.css';
+import dynamic from "next/dynamic";
+const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false});
+const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false});
 
 
 
@@ -20,7 +18,7 @@ class AddHead extends Component {
     super(props);
 
     this.state = {
-      value: momentJalaali(),
+      value: '',
     }
   }
 
@@ -32,8 +30,7 @@ class AddHead extends Component {
     newExpense['total_amount'] = $('#total-amount').val();
     newExpense['invoice_number'] = $('#invoice-number').val();
     newExpense['date'] = $('.datepicker-input').val();
-    console.log('komail',newExpense);
-    
+
     //check all fields filled
     let formFilled = true;
     $.each(newExpense, function(key, value) {
@@ -117,4 +114,4 @@ const mapStateToProps = (state) => {
         messageShowed: state.messageShowed,
     }
 }
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
+export default connect(mapStateToProps, mapDispatchToProps)(AddHead);

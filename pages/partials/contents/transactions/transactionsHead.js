@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Table, Button } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import TransactionsItem from "./transactionsItem";
 import { dispatchActions } from "../../../../redux/actions";
-import { TRANSACTIONS } from "../../consts/actionsConstants";
+import { TRANSACTIONS, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import AddHead from "./addHead";
 import $ from "jquery";
 
@@ -15,13 +14,26 @@ class TransactionsHead extends Component {
     }
 
     render() {
-        let { transactions } = this.props;
+        let { transactions, messageShowed, newTransaction } = this.props;
         
         let transactionRow = [];
         if (transactions) {
-            transactionRow = $.map(transactions.data, function (value, index) {
+            transactionRow = transactions.map((value, index) => {
                 return [<TransactionsItem key={index} row={index} transaction={value} />];
             });
+        }
+
+        if (newTransaction) {
+            let { message, success } = newTransaction;
+
+            if (!messageShowed) {
+                alert(message);
+                this.props.fetchData('', MESSAGE_SHOWED, 1);
+            }
+            if (success) {
+                $('form').find("input").val("");
+                $('#category').prop('selectedIndex', 0);
+            }
         }
 
         return (
@@ -55,8 +67,9 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {   
     return {
-        transactions: state.transactions.transactions,
+        transactions: state.transactions.transactions.data,
+        messageShowed: state.messageShowed.messageShowed,
+        newTransaction: state.transactions.newTransaction
     }
 }
-
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(TransactionsHead);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsHead);

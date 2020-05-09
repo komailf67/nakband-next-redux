@@ -6,6 +6,7 @@ import {Table} from "react-bootstrap";
 import {SOLD_PRODUCTS} from "../../consts/actionsConstants";
 import SoldProductsItem from "./soldProductsItem";
 import $ from "jquery";
+import {connect} from "react-redux";
 
 class SoldProductsHead extends Component {
     componentDidMount() {
@@ -16,7 +17,7 @@ class SoldProductsHead extends Component {
         let {soldProducts} = this.props;
         let soldProductRow = [];
         if (soldProducts) {
-            soldProductRow = $.map(soldProducts.data, function (value, index) {
+            soldProductRow = soldProducts.map((value, index) => {
                 return [<SoldProductsItem key={index} row={index} soldProduct={value}/>];
             });
         }
@@ -55,8 +56,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
-        soldProducts: state.sales.soldProducts,
+        soldProducts: state.sales.soldProducts.data,
     }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(SoldProductsHead);
+export default connect(mapStateToProps, mapDispatchToProps)(SoldProductsHead);

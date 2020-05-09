@@ -3,8 +3,8 @@ import { Button } from "react-bootstrap";
 import withRedux from "next-redux-wrapper";
 import { initStore } from "../../../../redux/store";
 import { dispatchActions } from "../../../../redux/actions";
-
 import { NEW_DEBTOR, MESSAGE_SHOWED, CHECKOUT_DEBT } from "../../consts/actionsConstants";
+import {connect} from "react-redux";
 
 class DebtorsItem extends Component {
 
@@ -39,5 +39,4 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: (url, actionType, data) => dispatch(dispatchActions(url, actionType, data)),
     }
 }
-export default withRedux(initStore, null, mapDispatchToProps)(DebtorsItem);
-// export default DebtorsItem;
+export default connect(null, mapDispatchToProps)(DebtorsItem);

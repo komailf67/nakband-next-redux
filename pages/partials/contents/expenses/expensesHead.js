@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Table, Button } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import ExpensesItem from "./expensesItem";
 import { dispatchActions } from "../../../../redux/actions";
 import { EXPENSES } from "../../consts/actionsConstants";
-import $ from "jquery";
 
 class ExpensesHead extends Component {
 
@@ -18,13 +16,12 @@ class ExpensesHead extends Component {
         
         let expenseRow = [];
         if (expenses) {
-            expenseRow = $.map(expenses.data, function (value, index) {
+            expenseRow = expenses.map((value, index) => {
                 return [<ExpensesItem key={index} row={index} expense={value} />];
             });
         }
-
         return (
-            <div id="storage">
+            <div id="expenses">
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -52,11 +49,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    // console.log('ddd',state);
-    
     return {
-        expenses: state.expenses.expenses,
+        expenses: state.expenses.expenses.data,
     }
 }
-
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(ExpensesHead);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesHead);

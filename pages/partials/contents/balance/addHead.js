@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Button, Col, FormControl, InputGroup } from 'react-bootstrap';
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import { dispatchActions } from "../../../../redux/actions";
 import { NEW_BALANCE, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import $ from "jquery";
-import DatePicker from 'react-datepicker2';
-import momentJalaali from 'moment-jalaali';
-// import 'react-datepicker2/src/style.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../../styles.css';
 
-
-
+import dynamic from "next/dynamic";
+const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false});
+const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false});
 
 class AddHead extends Component {
 
@@ -32,9 +27,7 @@ class AddHead extends Component {
     newBalance['unrecorded'] = $('#unrecorded').val();
     newBalance['description'] = $('#description').val();
     newBalance['date'] = $('.datepicker-input').val();
-    
-    console.log('komail',newBalance);
-    
+
     //check all fields filled
     let formFilled = true;
     $.each(newBalance, function(key, value) {
@@ -53,20 +46,6 @@ class AddHead extends Component {
   }
 
   render() {
-    let {messageShowed} = this.props.messageShowed;
-
-    if (this.props.newBalance) {  
-      let {message, success} = this.props.newBalance;
-      
-      if (!messageShowed) {
-        alert(message);
-        this.props.fetchData('', MESSAGE_SHOWED, 1);
-      }   
-      if (success) {
-        $('form').find("input").val("");
-        $('form').find("textarea").val("");
-      } 
-    }
     return (
       <Form>
         <Form.Row className="uncommon-inputs">
@@ -113,10 +92,5 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: (url, actionType, data) => dispatch(dispatchActions(url, actionType, data)),
     }
 }
-const mapStateToProps = (state) => {
-    return {
-      messageShowed: state.messageShowed,
-      newBalance:state.balances.newBalance
-    }
-}
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
+
+export default connect(null, mapDispatchToProps)(AddHead);

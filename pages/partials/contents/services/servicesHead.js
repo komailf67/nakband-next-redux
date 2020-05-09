@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Table, Button } from "react-bootstrap";
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import ServicesItem from "./servicesItem";
 import { products, dispatchActions, selectedProducts } from "../../../../redux/actions";
 import { SERVICES } from "../../consts/actionsConstants";
-import $ from "jquery";
 
 
 
@@ -17,17 +15,17 @@ class ServicesHead extends Component {
 
     render() {
         let { services } = this.props;
-        console.log('d',this.props);
-        
+
         let serviceRow = [];
+
         if (services) {
-            serviceRow = $.map(services, function (value, index) {
+            serviceRow = services.map((value, index) => {
                 return [<ServicesItem key={index} row={index} service={value} />];
             });
         }
 
         return (
-            <div id="storage">
+            <div id="services">
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -55,12 +53,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    // console.log('ddd',state);
-    
     return {
         services: state.services.services,
-        // is_open_modal: state.isOpenModal.is_open_modal
     }
 }
-
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(ServicesHead);
+export default connect(mapStateToProps, mapDispatchToProps)(ServicesHead);

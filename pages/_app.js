@@ -3,8 +3,7 @@ import App from 'next/app'
 import store from '../redux/store2';
 import {Provider} from 'react-redux';
 import withRedux from 'next-redux-wrapper';
-
-
+import './styles.css';
 
 class MyApp extends  App {
     static async getInitialProps({Component ,ctx}){
@@ -14,7 +13,11 @@ class MyApp extends  App {
         return {pageProps}
     }
     render() {
-        const {Component , pageProps , store} = this.props ;
+        const {
+            Component,
+            pageProps,
+            store
+        } = this.props ;
         return(
             <Provider store={store}>
                 <Component {...pageProps} />

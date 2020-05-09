@@ -1,59 +1,60 @@
 import React, { Component } from 'react';
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import { IS_OPEN_MODAL, SALE_PRODUCTS } from "../../consts/actionsConstants";
 import { dispatchActions, selectedProducts } from "../../../../redux/actions";
 import { Table, Form, Col, InputGroup, FormControl } from "react-bootstrap";
-import DatePicker from 'react-datepicker2';
-import momentJalaali from 'moment-jalaali';
 import $ from "jquery";
 import SalesInvoicesItemModal from "./salesInvoicesItemModal";
 import Modal, { ModalHeader, ModalBody, ModalFooter } from '../../modal/Modal.js';
-
+import dynamic from "next/dynamic";
+const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false});
+const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false});
 
 
 class SaleModal extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             category: '',
-            value: momentJalaali(),
+            value: '',
         }
+    }
+
+    componentDidMount = () => {
+        let thisProps = this.props;
+        $('button.btn-success').click(function () {
+            let commonDetails = {};
+            commonDetails['buyerName'] = $('#seller').val();
+            commonDetails['phoneNumber'] = $('#phone-number').val();
+            commonDetails['guarantee'] = $('#guarantee').val();
+            commonDetails['assurance'] = $('#assurance').val();
+            commonDetails['date'] = $('.datepicker-input').val();
+            commonDetails['amount'] = $('#invoice-sum').val();
+            // console.log(commonDetails);
+
+            let products = $('tr.product-for-sale');
+            let productsDetails = [];
+            $.map(products, function (value, index) {
+                let eachProduct = {};
+                eachProduct['id'] = $(value).find('td.product-id').data('product-id');
+                eachProduct['count'] = $(value).find('select.exist_count').val();
+                eachProduct['total_amount'] = $(value).find('input.sum-sale-price').val();
+                eachProduct['buyPrice'] = $(value).find('td.buy-price').data('buy-price');
+                eachProduct['sumSalePrice'] = $(value).find('input.sum-sale-price').val();
+                productsDetails.push(eachProduct)
+            });
+            let soldProducts = {};
+            soldProducts['commonDetails'] = commonDetails;
+            soldProducts['uncommonDetails'] = productsDetails;
+            thisProps.fetchData('http://127.0.0.1/api/sales', SALE_PRODUCTS, soldProducts);
+        });
     }
 
     toggle = () => {
         this.props.fetchData('', IS_OPEN_MODAL, 0);
     }
 
-    submitSale = () => {
-        let commonDetails = {};
-        commonDetails['buyerName'] = $('#seller').val();
-        commonDetails['phoneNumber'] = $('#phone-number').val();
-        commonDetails['guarantee'] = $('#guarantee').val();
-        commonDetails['assurance'] = $('#assurance').val();
-        commonDetails['date'] = $('.datepicker-input').val();
-        commonDetails['amount'] = $('#invoice-sum').val();
-        // console.log(commonDetails);
-        
-        let products = $('tr.product-for-sale');
-        let productsDetails = [];
-        $.map(products, function (value, index) {
-            let eachProduct = {};            
-            eachProduct['id'] = $(value).find('td.product-id').data('product-id');
-            eachProduct['count'] = $(value).find('select.exist_count').val();
-            eachProduct['total_amount'] = $(value).find('input.sum-sale-price').val();
-            eachProduct['buyPrice'] = $(value).find('td.buy-price').data('buy-price');
-            eachProduct['sumSalePrice'] = $(value).find('input.sum-sale-price').val();
-            productsDetails.push(eachProduct)
-        });
-        let soldProducts = {};
-        soldProducts['commonDetails'] = commonDetails;
-        soldProducts['uncommonDetails'] = productsDetails;
-        // console.log(soldProducts);
-        this.props.fetchData('http://127.0.0.1/api/sales', SALE_PRODUCTS, soldProducts);        
-    }
     render() {
         let { is_open_modal, products, selectedProductsIds } = this.props;
         let selectedProductsRows = $.map(products, function (value, index) {            
@@ -143,7 +144,7 @@ class SaleModal extends Component {
                 <button
                     type="button"
                     className="btn btn-success"
-                    onClick={this.submitSale}
+                    // onClick={this.submitSale}
                 >
                     فروش
                 </button>
@@ -174,4 +175,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(SaleModal);
+export default connect(mapStateToProps, mapDispatchToProps)(SaleModal);

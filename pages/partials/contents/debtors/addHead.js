@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
 import { dispatchActions } from "../../../../redux/actions";
 import { NEW_DEBTOR, MESSAGE_SHOWED } from "../../consts/actionsConstants";
 import $ from "jquery";
-import DatePicker from 'react-datepicker2';
-import momentJalaali from 'moment-jalaali';
-// import 'react-datepicker2/src/style.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../../styles.css';
-
-
+import {connect} from "react-redux";
+import dynamic from "next/dynamic";
+const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false});
+const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false});
 
 
 class AddHead extends Component {
@@ -20,7 +15,7 @@ class AddHead extends Component {
     super(props);
 
     this.state = {
-      value: momentJalaali(),
+      value: '',
     }
   }
 
@@ -49,20 +44,6 @@ class AddHead extends Component {
   }
 
   render() {
-    let {messageShowed} = this.props.messageShowed;
-
-    if (this.props.newDebtor) {  
-      let {message, success} = this.props.newDebtor;
-      
-      if (!messageShowed) {
-        alert(message);
-        this.props.fetchData('', MESSAGE_SHOWED, 1);
-      }   
-      if (success) {
-        $('form').find("input").val("");
-        $('#category').prop('selectedIndex',0);
-      } 
-    }
     return (
       <Form>
         <Form.Row className="uncommon-inputs">
@@ -100,10 +81,5 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: (url, actionType, data) => dispatch(dispatchActions(url, actionType, data)),
     }
 }
-const mapStateToProps = (state) => {
-    return {
-      messageShowed: state.messageShowed,
-      newDebtor:state.debtors.newDebtor
-    }
-}
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
+
+export default connect(null, mapDispatchToProps)(AddHead);

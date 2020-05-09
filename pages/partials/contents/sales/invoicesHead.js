@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import withRedux from "next-redux-wrapper";
-import {initStore} from "../../../../redux/store";
+import {connect} from "react-redux";
 import {dispatchActions} from "../../../../redux/actions";
 import {Table} from "react-bootstrap";
 import {SALES_INVOICES} from "../../consts/actionsConstants";
@@ -16,12 +15,12 @@ class InvoicesHead extends Component {
         let {saleInvoices} = this.props;
         let salesRow = [];
         if (saleInvoices) {
-            salesRow = $.map(saleInvoices.data, function (value, index) {
+            salesRow = saleInvoices.data.map((value, index) => {
                 return [<SalesInvoicesItem key={index} row={index} saleInvoice={value}/>];
             });
         }
         return (
-            <div id="storage">
+            <div id="sale-invoices">
                 <Table striped bordered hover>
                     <thead>
                     <tr>
@@ -57,4 +56,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(InvoicesHead);
+export default connect(mapStateToProps, mapDispatchToProps)(InvoicesHead);
