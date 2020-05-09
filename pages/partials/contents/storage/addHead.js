@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Container, Row, Button, Card, ListGroup, Col } from 'react-bootstrap';
-import withRedux from "next-redux-wrapper";
-import { initStore } from "../../../../redux/store";
+import {connect} from "react-redux";
 import { products, dispatchActions } from "../../../../redux/actions";
 import { CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED } from "../../consts/actionsConstants";
 import $ from "jquery";
-import DatePicker from 'react-datepicker2';
-import momentJalaali from 'moment-jalaali';
 import dynamic from "next/dynamic";
-// const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false})
-// const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false})
+const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false})
+const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false})
 // import 'react-datepicker2/src/style.min.css';
 
 
@@ -20,7 +17,7 @@ class AddHead extends Component {
 
         this.state = {
             category: '',
-            value: momentJalaali(),
+            value: '',
         }
     }
 
@@ -96,7 +93,7 @@ class AddHead extends Component {
         let { categories } = this.props;
         let categoryRow = [];
         if (categories) {
-            categoryRow = $.map(categories.data, function (value, index) {
+            categoryRow = categories.map((value, index) => {
             return [<option className="product-data" key={index} data-category-id={value.id}>{value.title}</option>]
             })
         }
@@ -170,8 +167,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     console.log(state);
     return {
-        categories: state.categories.categories,
+        categories: state.categories.categories.data,
         isFormSubmitted: state.formReducer.isFormSubmitted,
     }
 }
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddHead);
+export default connect(mapStateToProps, mapDispatchToProps)(AddHead);
