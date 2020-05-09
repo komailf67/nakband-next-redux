@@ -2,11 +2,10 @@ import {SALES_INVOICES, SELECTED_PRODUCTS, SOLD_PRODUCTS} from "../../pages/part
 
 const initialState = {
     sales: [],
+    soldProducts: [],
 }
 
 export const salesReducer = (state = initialState, action) => {
-    // console.log('saleReducer', action);
-    
     switch (action.type) {
 
         case SALES_INVOICES:

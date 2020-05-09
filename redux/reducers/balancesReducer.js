@@ -15,8 +15,6 @@ export const balancesReducer = (state = initialState, action) => {
       }
     case NEW_BALANCE:
       balances = state.balances.data;
-      console.log('tr', balances);
-      
       let newBalances = action.payload.data;
       if (balances.length == 0) {
         balances.push(newBalances);

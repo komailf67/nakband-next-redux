@@ -15,8 +15,6 @@ export const transactionsReducer = (state = initialState, action) => {
       }
     case NEW_TRANSACTION:
       transactions = state.transactions.data;
-      console.log('tr', transactions);
-      
       let newTransactions = action.payload.data;
       if (transactions.length == 0) {
         transactions.push(newTransactions);

@@ -84,8 +84,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    // console.log('ddd',state);
-    
     return {
         products: state.products.products.data,
         is_open_modal: state.isOpenModal.is_open_modal,

@@ -256,12 +256,10 @@ export function dispatchActions(url, actionType, data) {
                         // }
                     })
                     .then((response) => {
-                        // console.log(response);
                         dispatch(isFormSubmitted(response.data.success))
                         dispatch(addProduct(response.data))
                     }).catch(e => {
                     console.log(e);
-
                 })
                 break;
             case IS_FORM_SUBMITTED:

@@ -7,8 +7,6 @@ const initialState = {
 }
 
 export const serviceReducer = (state = initialState, action) => {
-    console.log('saleReducer', action);
-
     switch (action.type) {
 
         case SERVICES:
@@ -17,8 +15,6 @@ export const serviceReducer = (state = initialState, action) => {
                 services: action.services.data
             }
         case NEW_SERVICE:
-            console.log('state', state);
-            
             return {
                 ...state,
                 newService: action.newService

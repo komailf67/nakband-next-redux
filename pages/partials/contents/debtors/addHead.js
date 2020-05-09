@@ -26,8 +26,7 @@ class AddHead extends Component {
     newDebtor['description'] = $('#description').val();
     newDebtor['amount'] = $('#amount').val();
     newDebtor['date'] = $('.datepicker-input').val();
-    console.log('komail',newDebtor);
-    
+
     //check all fields filled
     let formFilled = true;
     $.each(newDebtor, function(key, value) {

@@ -75,7 +75,6 @@ class AddHead extends Component {
         let products = {};
         products['commonDetails'] = sellerDetails;
         products['uncommonDetails'] = newProduct;
-        // console.log(products);
         this.props.fetchData('http://127.0.0.1/api/products', ADD_PRODUCTS, products);
     }
 
@@ -165,7 +164,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         categories: state.categories.categories.data,
         isFormSubmitted: state.formReducer.isFormSubmitted,
