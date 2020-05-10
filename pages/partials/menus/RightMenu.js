@@ -71,12 +71,6 @@ class RightMenu extends Component {
                         <ListGroup.Item>
                             <Link href="/debtors/debtors">بدهکارها</Link>
                         </ListGroup.Item>
-                        <ListGroup.Item>
-                            <Link href="/products">Products</Link>
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <Link href="/orders">Orders</Link>
-                        </ListGroup.Item>
                     </ListGroup>
                 </Card>
             </Col>
