@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Form, Container, Row, Button, Card, ListGroup, Col } from 'react-bootstrap';
 import {connect} from "react-redux";
 import { products, dispatchActions } from "../../../../redux/actions";
-import { CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED } from "../../consts/actionsConstants";
+import { CATEGORIES, ADD_PRODUCTS, IS_FORM_SUBMITTED, PRODUCTS_DESCRIPTIONS } from "../../consts/actionsConstants";
 import $ from "jquery";
 import dynamic from "next/dynamic";
+import Autocomplete from "../../Autocomplete";
 const DatePicker = dynamic(()=> import('react-datepicker2'),{ssr:false})
 const momentJalaali = dynamic(()=> import('moment-jalaali'),{ssr:false})
-// import 'react-datepicker2/src/style.min.css';
-
 
 class AddHead extends Component {
 
@@ -29,6 +28,7 @@ class AddHead extends Component {
     
     componentDidMount = () => {
         this.props.fetchData('http://127.0.0.1/api/categories', CATEGORIES)
+        this.props.fetchData('http://127.0.0.1/api/products/descriptions', PRODUCTS_DESCRIPTIONS)
         //START jquery functions
         //delete row
         $(document).on('click', '.btn-danger', function () {
@@ -89,7 +89,7 @@ class AddHead extends Component {
     }
 
     render() {
-        let { categories } = this.props;
+        let { categories, productsDescriptions } = this.props;
         let categoryRow = [];
         if (categories) {
             categoryRow = categories.map((value, index) => {
@@ -140,7 +140,9 @@ class AddHead extends Component {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>توضیح مدل</Form.Label>
-                        <Form.Control type="text" className="description"/>
+                        <Autocomplete
+                            suggestions={productsDescriptions}
+                        />
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>تعداد</Form.Label>
@@ -167,6 +169,7 @@ const mapStateToProps = (state) => {
     return {
         categories: state.categories.categories.data,
         isFormSubmitted: state.formReducer.isFormSubmitted,
+        productsDescriptions: state.products.productsDescriptions.data
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AddHead);

@@ -24,7 +24,8 @@ import {
     TRANSACTIONS,
     NEW_TRANSACTION,
     NEW_BALANCE,
-    BALANCES
+    BALANCES,
+    PRODUCTS_DESCRIPTIONS
 } from '../../pages/partials/consts/actionsConstants.js';
 import axios from 'axios';
 
@@ -37,12 +38,12 @@ export const products = (products) => {
     }
 }
 
-// export const orders = (orders) => {
-//   return {
-//     type: 'ORDERS',
-//     orders
-//   }
-// }
+export const productsDescriptions = (productsDescriptions) => {
+    return {
+        type: PRODUCTS_DESCRIPTIONS,
+        payload: productsDescriptions
+    }
+}
 
 export const categories = (categories) => {
     return {
@@ -230,6 +231,13 @@ export function dispatchActions(url, actionType, data) {
                 axios.get(url)
                     .then((response) => {
                         dispatch(products(response.data))
+                        return response;
+                    })
+                break;
+            case PRODUCTS_DESCRIPTIONS:
+                axios.get(url)
+                    .then((response) => {
+                        dispatch(productsDescriptions(response.data))
                         return response;
                     })
                 break;

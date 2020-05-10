@@ -1,7 +1,8 @@
-import {ORDERS, PRODUCTS, CATEGORIES, ADD_PRODUCTS, SALE_PRODUCTS} from "../../pages/partials/consts/actionsConstants";
+import {PRODUCTS, PRODUCTS_DESCRIPTIONS, ADD_PRODUCTS, SALE_PRODUCTS} from "../../pages/partials/consts/actionsConstants";
 
 const initialState = {
-    products: []
+    products: [],
+    productsDescriptions: [],
 }
 
 export const productsReducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ export const productsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: action.products
+            }
+        case PRODUCTS_DESCRIPTIONS:
+            return {
+                ...state,
+                productsDescriptions: action.payload
             }
         case ADD_PRODUCTS :
             return {

@@ -1,4 +1,5 @@
 export const PRODUCTS = 'PRODUCTS';
+export const PRODUCTS_DESCRIPTIONS = 'PRODUCTS_DESCRIPTIONS';
 export const ORDERS = 'ORDERS';
 export const CATEGORIES = 'CATEGORIES';
 export const ADD_PRODUCTS = 'ADD_PRODUCTS';
